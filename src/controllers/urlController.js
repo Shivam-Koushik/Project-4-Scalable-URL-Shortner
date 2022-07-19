@@ -1,6 +1,8 @@
 const urlModel = require("../models/urlModel")
 const Validator = require("../Validator/validation")
 const shortid = require('shortid');
+const validUrl = require('valid-url');
+
 
 
 const postUrl = async function (req, res) {
@@ -11,7 +13,7 @@ const postUrl = async function (req, res) {
     if (!Validator.isValid(newBody)) return res.status(400).send({ status: false, message: "Enter url" })
     if (!Validator.isValidurl(newBody)) return res.status(400).send({ status: false, message: "Url is not valid" })
 
-    const urlCode = shortid.generate(body);
+    const urlCode = shortid.generate(newBody);
     const obj = {
       "longUrl": body.longUrl,
       "shortUrl": `http://localhost:3000/${urlCode.toLowerCase().trim()}`,
@@ -35,7 +37,7 @@ const getUrl = async function (req, res) {
     const urlCode = req.params.urlCode
     let checkUrl = await urlModel.findOne({ urlCode: urlCode })
     if (checkUrl) {
-      return res.status(302).send(checkUrl.longUrl);
+      return res.status(302).redirect(checkUrl.longUrl);
     } else {
       return res.status(404).send({ status: false,message: "No url found"})
     }
