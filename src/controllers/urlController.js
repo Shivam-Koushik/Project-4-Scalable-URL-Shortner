@@ -1,9 +1,6 @@
 const urlModel = require("../models/urlModel")
 const Validator = require("../Validator/validation")
 const shortid = require('shortid');
-const validUrl = require('valid-url');
-
-
 
 const postUrl = async function (req, res) {
   try {
