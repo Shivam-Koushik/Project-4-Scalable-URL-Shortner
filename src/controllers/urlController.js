@@ -53,7 +53,7 @@ const postUrl = async function (req, res) {
     }
 
     const data = await urlModel.create(obj)
-    if (data) {
+    if (data) { 
       await SET_ASYNC(`${data.longUrl}`, JSON.stringify(data));
       return res.status(201).send({ status: true, data: data })
     }
